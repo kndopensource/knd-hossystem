@@ -16,18 +16,12 @@
 
     <dependencies>
         <!--业务扩展模块-->
-        <!-- hos业务基础模块 -->
-        <dependency>
-            <groupId>com.knd</groupId>
-            <artifactId>hos-sys-manager</artifactId>
-        </dependency>
-
         <!-- 数据源容器配置业务模块 -->
         <dependency>
             <groupId>com.knd</groupId>
             <artifactId>hos-dyconfig-db</artifactId>
         </dependency>
-        <!-- 业务模块 -->
+        <!-- 数据采集上传业务模块 -->
         <dependency>
             <groupId>com.knd</groupId>
             <artifactId>hos-data-coltransfer</artifactId>
@@ -38,7 +32,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -58,22 +51,47 @@
                     <fork>true</fork><!-- 如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart -->
                 </configuration>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>io.fabric8</groupId>-->
+                <!--<artifactId>docker-maven-plugin</artifactId>-->
+                <!--<version>0.26.1</version>-->
+                <!--<configuration>-->
+                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>-->
+                    <!--<images>-->
+                        <!--<image>-->
+                            <!--<name>snexus.stylefeng.cn:6001/guns-api:${docker.img.version}</name>-->
+                            <!--<build>-->
+                                <!--<from>java:8</from>-->
+                                <!--<assembly>-->
+                                    <!--<descriptor>docker-assembly.xml</descriptor>-->
+                                <!--</assembly>-->
+                                <!--<cmd>-->
+                                    <!--<shell>java -jar -Xms512m -Xmx512m -Xss1024K -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m /maven/${project.artifactId}.jar</shell>-->
+                                <!--</cmd>-->
+                            <!--</build>-->
+                        <!--</image>-->
+                    <!--</images>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.26.1</version>
                 <configuration>
                     <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                    <!--<dockerHost>tcp://192.168.242.188:2376</dockerHost>-->
+                    <!--<certPath>${project.basedir}/docker/ssh</certPath>-->
                     <images>
                         <image>
-                            <name>snexus.hossystem.com:6001/guns-api:${docker.img.version}</name>
+                            <alias>hossystem-server</alias>
+                            <name>hos/${project.artifactId}:latest</name>
                             <build>
                                 <from>java:8</from>
                                 <assembly>
                                     <descriptor>docker-assembly.xml</descriptor>
                                 </assembly>
                                 <cmd>
-                                    <shell>java -jar -Xms512m -Xmx512m -Xss1024K -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m /maven/${project.artifactId}.jar</shell>
+                                    <shell>java -jar /maven/${project.artifactId}.jar</shell>
                                 </cmd>
                             </build>
                         </image>

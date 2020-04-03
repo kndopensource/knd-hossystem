@@ -14,11 +14,11 @@
     <description>系统基础功能以及web模块</description>
 
       <dependencies>
-            <!--基础组件-->
-            <dependency>
-                <groupId>com.knd</groupId>
-                <artifactId>hos-base</artifactId>
-            </dependency>
+            <!--&lt;!&ndash;基础组件&ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>com.knd</groupId>-->
+                <!--<artifactId>hos-base</artifactId>-->
+            <!--</dependency>-->
             <!-- 权限管理模块 -->
             <dependency>
                 <groupId>com.knd</groupId>

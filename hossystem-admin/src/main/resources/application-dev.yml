@@ -1,4 +1,4 @@
-# Mysql数据库
+# Mysql数据库  useSSL=false&serverTimezone=CTT?  &useSSL=true&serverTimezone=UTC
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

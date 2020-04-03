@@ -17,6 +17,7 @@
         <module>hos-sys-manager</module>
         <module>hos-data-coltransfer</module>
         <module>hos-dyconfig-db</module>
+        <module>hos-generator</module>
     </modules>
 
 

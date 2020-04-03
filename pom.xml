@@ -19,6 +19,7 @@
         <pgsql.version>42.2.5</pgsql.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <beetl.version>2.9.3</beetl.version>
+        <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
         <jwt.version>0.9.0</jwt.version>
         <oshi.version>3.9.1</oshi.version>
@@ -27,6 +28,7 @@
         <batik.version>1.7</batik.version>
         <docker.img.version>latest</docker.img.version>
         <kernel.version>2.2.12</kernel.version>
+        <mybatis-plus-generator.version>3.3.0</mybatis-plus-generator.version>
     </properties>
     <modules>
         <!--系统基础模块-->
@@ -114,7 +116,12 @@
                 <artifactId>beetl</artifactId>
                 <version>${beetl.version}</version>
             </dependency>
-
+            <!--velocity模板引擎-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
             <!--jwt token-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -168,9 +175,13 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -180,16 +191,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <delimiters>
-                        <delimiter>@</delimiter>
-                    </delimiters>
-                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
