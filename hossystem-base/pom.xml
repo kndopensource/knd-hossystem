@@ -16,6 +16,7 @@
     <modules>
         <module>hos-base</module>
         <module>hos-base-auth</module>
+        <module>hos-base-storage</module>
     </modules>
 
 </project>
