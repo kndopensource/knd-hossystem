@@ -30,6 +30,8 @@
         <kernel.version>2.2.12</kernel.version>
         <mybatis-plus-generator.version>3.3.0</mybatis-plus-generator.version>
         <aliyun-oss.version>3.4.2</aliyun-oss.version>
+        <autoconfigure.version>2.2.5.RELEASE</autoconfigure.version>
+        <lombok.version>1.18.10</lombok.version>
     </properties>
     <modules>
         <!--系统基础模块-->
@@ -54,12 +56,17 @@
             </dependency>
             <dependency>
                 <groupId>com.knd</groupId>
-                <artifactId>hos-sys-manager</artifactId>
+                <artifactId>hos-base-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.knd</groupId>
-                <artifactId>hos-base-auth</artifactId>
+                <artifactId>hos-base-storage</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.knd</groupId>
+                <artifactId>hos-sys-manager</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -72,6 +79,7 @@
                 <artifactId>hos-data-coltransfer</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
             <!--第三方核心组件-->
             <dependency>
                 <groupId>cn.stylefeng.roses</groupId>
@@ -185,6 +193,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

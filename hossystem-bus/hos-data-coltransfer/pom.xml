@@ -18,6 +18,10 @@
             <groupId>com.knd</groupId>
             <artifactId>hos-sys-manager</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.knd</groupId>
+            <artifactId>hos-base-storage</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

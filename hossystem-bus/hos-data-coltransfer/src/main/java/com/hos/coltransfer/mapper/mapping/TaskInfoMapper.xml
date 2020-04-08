@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hos.coltransfer.modular.mapper.TaskInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hos.coltransfer.entity.TaskInfo">
+        <id column="_id" property="id" />
+        <result column="task_code" property="taskCode" />
+        <result column="patient_name" property="patientName" />
+        <result column="patient_sname" property="patientSname" />
+        <result column="patient_sex" property="patientSex" />
+        <result column="patient_age" property="patientAge" />
+        <result column="patient_tele" property="patientTele" />
+        <result column="accno" property="accno" />
+        <result column="check_type" property="checkType" />
+        <result column="check_part" property="checkPart" />
+        <result column="is_hospitalization" property="isHospitalization" />
+        <result column="self_task_code" property="selfTaskCode" />
+        <result column="check_date" property="checkDate" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        _id, task_code, patient_name, patient_sname, patient_sex, patient_age, patient_tele, accno, check_type, check_part, is_hospitalization, self_task_code, check_date, create_date, update_date
+    </sql>
+
+</mapper>

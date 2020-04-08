@@ -14,6 +14,7 @@ public class GunsCodeGenerator {
     public static void main(String[] args) {
 
         /**
+         * bus_file_info  bus_task_info
          * Mybatis-Plus的代码生成器:
          *      mp的代码生成器可以生成实体,mapper,mapper对应的xml,service
          */
@@ -24,7 +25,7 @@ public class GunsCodeGenerator {
          * guns的生成器:
          *      guns的代码生成器可以生成controller,html页面,页面对应的js
          */
-        gunsGeneratorConfig.doGunsGeneration();
+//        gunsGeneratorConfig.doGunsGeneration();
     }
 
 }

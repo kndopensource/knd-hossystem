@@ -18,38 +18,37 @@ public class GunsGeneratorConfig extends AbstractGeneratorConfig {
         globalConfig.setBaseResultMap(true);
         globalConfig.setBaseColumnList(true);
         globalConfig.setOpen(false);
-        globalConfig.setAuthor("stylefeng");
+        globalConfig.setAuthor("zt");
     }
 
     protected void dataSourceConfig() {
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
-//        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("root");
-        dataSourceConfig.setUrl("jdbc:mysql://127.0.0.1:3306/guns_advanced?characterEncoding=utf8");
+        dataSourceConfig.setUrl("jdbc:mysql://192.168.1.110:3306/kndcollectdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT");
     }
 
     protected void strategyConfig() {
-        strategyConfig.setTablePrefix(new String[]{"sys_"});// 此处可以修改为您的表前缀
+        strategyConfig.setTablePrefix(new String[]{"bus_"});// 此处可以修改为您的表前缀
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
     }
 
     protected void packageConfig() {
         packageConfig.setParent(null);
-        packageConfig.setEntity("com.stylefeng.guns.admin.common.model");
-        packageConfig.setMapper("com.stylefeng.guns.admin.common.dao");
-        packageConfig.setXml("com.stylefeng.guns.admin.common.dao.mapping");
+        packageConfig.setEntity("com.hos.coltransfer.modular.entity");
+        packageConfig.setMapper("com.hos.coltransfer.modular.mapper");
+        packageConfig.setXml("com.hos.coltransfer.modular.mapper.mapping");
     }
 
     protected void contextConfig() {
-        contextConfig.setProPackage("com.stylefeng.guns.admin");
-        contextConfig.setCoreBasePackage("com.stylefeng.guns.core");
-        contextConfig.setBizChName("字典管理");
-        contextConfig.setBizEnName("sysDict");
-        contextConfig.setModuleName("system");
-        contextConfig.setProjectPath("D:\\ideaSpace\\guns\\guns-admin");//写自己项目的绝对路径
-        contextConfig.setEntityName("SysDict");
+        contextConfig.setProPackage("com.hos.coltransfer");
+        contextConfig.setCoreBasePackage("com.hos.coltransfer.core");
+        contextConfig.setBizChName("数据采集管理");
+        contextConfig.setBizEnName("coltransfer");
+        contextConfig.setModuleName("coltransfer");
+        contextConfig.setProjectPath("H:\\workspace\\knd-hossystem\\hossystem-bus\\hos-data-coltransfer");//写自己项目的绝对路径
+        contextConfig.setEntityName("BusTaskInfo");
         sqlConfig.setParentMenuName(null);//这里写已有菜单的名称,当做父节点
 
         /**
