@@ -100,6 +100,10 @@ map+warpper方式即为把controller层的返回结果使用BeanKit工具类把�
 Guns的数据范围控制是指，对拥有相同角色的用户，根据部门的不同进行相应的数据筛选，如果部门不相同，那么有可能展示出的具体数据是不一致的.所以说Guns对数据范围控制是以部门id为单位来标识的，如何增加数据范围拦截呢?只需在相关的mapper接口的参数中增加一个DataScope对象即可，DataScope中有两个字段，scopeName用来标识sql语句中部门id的字段名称，例如deptiid或者id，另一个字段deptIds就是具体需要过滤的部门id的集合.拦截器原理如下:拦截mapper中包含DataScope对象的方法，获取其原始sql，并做一个包装限制部门id在deptIds范围内的数据进行展示.
 
 ### swagger api管理使用说明
+  访问管理:
+  一般UI访问路径:http://localhost:端口/swagger-ui.html
+   bootstrap样式方式路径:http://localhost:端口/doc.html
+   
 swagger会管理所有包含@ApiOperation注解的控制器方法，同时，可利用@ApiImplicitParams注解标记接口中的参数，具体用法请参考CodeController类中的用法。
 ```
  @ApiOperation("业务测试接口")
@@ -111,6 +115,7 @@ swagger会管理所有包含@ApiOperation注解的控制器方法，同时，可
  })
  @RequestMapping(value = "/generate", method = RequestMethod.POST)
 ```
+
 
 ### jwt token鉴权机制
 jwt token鉴权机制是指若需要请求服务器接口，必须通过AuthController获取一个请求令牌(jwt token)，持有jwt token的用户才可以访问服务器的其他资源，如果没有此令牌，则访问接口会直接忽略，请求获取jwt token时，需要携带credenceName和credenceCode(可以是账号密码，可以是手机号验证码等等)，校验credenceName和credenceCode成功后，会颁发给客户端一个jwt token还有一个随机字符串，用于传输过程中对数据进行签名用，签名机制请见下面介绍.基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息.这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利.
@@ -128,4 +133,9 @@ jwt token鉴权机制是指若需要请求服务器接口，必须通过AuthCont
             -xml文件           
            --mapper文件
           --service      业务层
+          --other        其他包
           
+### 开发日志
+   2020-04-15
+    1. swagger2接口配置新增 swagger-ui-bootstrap访问样式         
+    2. swagger2接口文档访问页面开发访问,排除系统登录权限校验

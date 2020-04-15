@@ -97,7 +97,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/assets/**",
                         "/favicon.ico",
-                        "/activiti-editor/**"
+                        "/activiti-editor/**",
+                        "/doc.html",      // swagger-bootstrap-ui
+                        "/swagger-ui.html"
                 );
 
     }

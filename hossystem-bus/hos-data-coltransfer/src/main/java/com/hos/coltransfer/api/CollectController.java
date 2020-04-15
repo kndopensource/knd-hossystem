@@ -5,13 +5,13 @@ import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.hos.base.log.BussinessLog;
 import com.hos.coltransfer.modeler.TaskDicomInfoer;
 import com.hos.coltransfer.modeler.TaskInfoer;
+import com.hos.coltransfer.service.ITaskInfoService;
 import com.hos.sys.core.constant.dictmap.RoleDict;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
 
 
 /**
@@ -26,6 +26,9 @@ import java.time.LocalDate;
 @Slf4j
 public class CollectController {
 
+    @Autowired
+    private ITaskInfoService iTaskInfoService;
+
     /**
      * 患者信息定时删除--deviceCode校验合法性
      * /api/collect/saveTaskInfo   任务信息保存(仅用于胶片报告上传)
@@ -38,10 +41,6 @@ public class CollectController {
      * //    bus_file_info 文件上传信息表
      *       bus_task_info 任务信息表
      *       处理接口日志记录用户未登录的情况
-     *
-     *
-     *
-     *
      */
 
     /**
@@ -57,6 +56,8 @@ public class CollectController {
 
         log.info("==========获取任务信息接口调用参数==========");
         log.info("胶片/报告任务信息对象:"+taskInfoer);
+
+
         return ResponseData.success();
     }
 
@@ -79,8 +80,16 @@ public class CollectController {
         log.info("检查号:"+accno);
         log.info("自助任务编码:"+selfTaskCode);
 
+        if(StringUtils.isBlank(accno)){
+            return ResponseData.error("检查号不能为空!");
+        }
 
-        return ResponseData.success();
+        if(StringUtils.isBlank(selfTaskCode)){
+            return ResponseData.error("自助任务编码不能为空!");
+        }
+        ResponseData responseData = iTaskInfoService.taskInfoExist(accno,selfTaskCode);
+
+        return responseData;
 
     }
 

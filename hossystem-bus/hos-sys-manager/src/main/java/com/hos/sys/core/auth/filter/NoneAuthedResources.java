@@ -14,7 +14,10 @@ public class NoneAuthedResources {
     public static final String[] FRONTEND_RESOURCES = {
             "/assets/**",
             "/favicon.ico",
-            "/activiti-editor/**"
+            "/activiti-editor/**",
+            // swagger2
+            "/doc.html",
+            "/swagger-ui.html"
     };
 
 
@@ -31,7 +34,10 @@ public class NoneAuthedResources {
 
             //主页
             "/",
-
+            //swagger2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/webjars/**",
             // 锁屏
             "/system/lock",
 
@@ -68,7 +74,7 @@ public class NoneAuthedResources {
             //获取租户列表的接口
             "/tenantInfo/listTenants",
 
-            // 采集模块功能接口
+            // 采集模块功能接口--swagger2调试阶段排除掉
             "/api/v1/collect/**"
 
     };

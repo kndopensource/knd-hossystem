@@ -21,6 +21,9 @@
         <beetl.version>2.9.3</beetl.version>
         <velocity.version>1.7</velocity.version>
         <swagger.version>2.9.2</swagger.version>
+        <swagger-bootstrap-ui>1.9.3</swagger-bootstrap-ui>
+        <swagger-annotations.version>1.5.22</swagger-annotations.version>
+        <swagger-models>1.5.22</swagger-models>
         <jwt.version>0.9.0</jwt.version>
         <oshi.version>3.9.1</oshi.version>
         <just.auth.version>1.9.5</just.auth.version>
@@ -178,7 +181,8 @@
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun-oss.version}</version>
             </dependency>
-            <!--swagger-->
+
+            <!-- Swagger API文档 -->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -188,6 +192,27 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- # 增加两个配置解决 NumberFormatException -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
