@@ -1,12 +1,22 @@
-# Compiled class file
+# Compiled class file Editor directories and files
 *.class
 *.iml
 *.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 target/
 logs/
 
 # Log file
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # BlueJ files
 *.ctxt
@@ -40,3 +50,12 @@ _dockerCerts/
 .factorypath
 
 transaction-logs
+
+.DS_Store
+node_modules
+/dist
+
+# local env files
+.env.local
+.env.*.local
+
