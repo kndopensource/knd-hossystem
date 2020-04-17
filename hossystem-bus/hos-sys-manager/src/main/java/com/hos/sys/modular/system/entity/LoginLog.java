@@ -36,6 +36,7 @@ public class LoginLog implements Serializable {
     @TableField("user_id")
     private Long userId;
 
+
     /**
      * 创建时间
      */

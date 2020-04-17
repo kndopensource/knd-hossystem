@@ -266,8 +266,10 @@
               loginParams.checkKey = that.currdatetime
               console.log("登录参数",loginParams)
               that.Login(loginParams).then((res) => {
+                console.log("登录成功返回参数:"+res);
                 this.departConfirm(res)
               }).catch((err) => {
+                console.log(err);
                 that.requestFailed(err);
               });
 

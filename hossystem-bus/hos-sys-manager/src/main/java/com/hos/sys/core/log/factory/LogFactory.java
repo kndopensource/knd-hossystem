@@ -44,4 +44,14 @@ public class LogFactory {
         loginLog.setMessage(msg);
         return loginLog;
     }
+    public static LoginLog createLoginLog(LogType logType, String userId, String msg, String ip) {
+        LoginLog loginLog = new LoginLog();
+        loginLog.setLogName(logType.getMessage());
+//        loginLog.setUserId(userId);  TODO
+        loginLog.setCreateTime(new Date());
+        loginLog.setSucceed(LogSucceed.SUCCESS.getMessage());
+        loginLog.setIpAddress(ip);
+        loginLog.setMessage(msg);
+        return loginLog;
+    }
 }

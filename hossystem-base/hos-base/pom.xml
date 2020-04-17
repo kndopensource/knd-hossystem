@@ -104,5 +104,17 @@
                 <groupId>com.github.oshi</groupId>
                 <artifactId>oshi-core</artifactId>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+            </dependency>
         </dependencies>
 </project>

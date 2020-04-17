@@ -39,13 +39,24 @@ public class LogTaskFactory {
             }
         };
     }
-
+    public static TimerTask loginLog(final String userId, final String ip) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    LoginLog loginLog = LogFactory.createLoginLog(LogType.LOGIN, userId, null, ip);
+                    loginLogMapper.insert(loginLog);
+                } catch (Exception e) {
+                    logger.error("创建登录日志异常!", e);
+                }
+            }
+        };
+    }
     public static TimerTask loginLog(final String username, final String msg, final String ip) {
         return new TimerTask() {
             @Override
             public void run() {
-                LoginLog loginLog = LogFactory.createLoginLog(
-                        LogType.LOGIN_FAIL, null, "账号:" + username + "," + msg, ip);
+                LoginLog loginLog = LogFactory.createLoginLog(LogType.LOGIN_FAIL, "", "账号:" + username + "," + msg, ip);
                 try {
                     loginLogMapper.insert(loginLog);
                 } catch (Exception e) {

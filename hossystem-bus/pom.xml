@@ -18,6 +18,7 @@
         <module>hos-data-coltransfer</module>
         <module>hos-dyconfig-db</module>
         <module>hos-generator</module>
+        <module>hos-sys-bcmanager</module>
     </modules>
 
 

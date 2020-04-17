@@ -66,7 +66,8 @@ const user = {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
           if(response.code =='200'){
-            const result = response.result
+            // const result = response.result
+            const result = response.data;
             const userInfo = result.userInfo
             Vue.ls.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
             Vue.ls.set(USER_NAME, userInfo.username, 7 * 24 * 60 * 60 * 1000)

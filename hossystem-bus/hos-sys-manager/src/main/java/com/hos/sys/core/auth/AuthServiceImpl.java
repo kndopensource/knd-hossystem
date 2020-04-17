@@ -22,11 +22,14 @@ import com.hos.sys.core.util.SaltUtil;
 import cn.stylefeng.roses.core.util.HttpContext;
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
+import com.hos.sys.modular.system.entity.SysUser;
 import com.hos.sys.modular.system.entity.User;
 import com.hos.sys.modular.system.factory.UserFactory;
 import com.hos.sys.modular.system.mapper.MenuMapper;
+import com.hos.sys.modular.system.mapper.SysUserMapper;
 import com.hos.sys.modular.system.mapper.UserMapper;
 import com.hos.sys.modular.system.service.DictService;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
@@ -48,7 +51,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private MenuMapper menuMapper;
 
@@ -86,6 +88,7 @@ public class AuthServiceImpl implements AuthService {
     public String login(String username) {
 
         User user = userMapper.getByAccount(username);
+
 
         // 账号不存在
         if (null == user) {

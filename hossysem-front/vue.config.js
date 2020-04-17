@@ -65,7 +65,7 @@ module.exports = {
           '/Knd-Hos': ''  //默认所有请求都加了Knd-Hos前缀，需要去掉
         }
       }, */
-      '/Knd-Hos': {
+      '/': {
         target: 'http://127.0.0.1:8888', // 请求本地 需要Knd-Hos后台项目
         ws: false,
         changeOrigin: true
