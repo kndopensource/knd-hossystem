@@ -73,6 +73,12 @@
                 <artifactId>hos-sys-manager</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--后台管理接口层-->
+            <dependency>
+                <groupId>com.knd</groupId>
+                <artifactId>hos-sys-bcmanager</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.knd</groupId>
                 <artifactId>hos-dyconfig-db</artifactId>

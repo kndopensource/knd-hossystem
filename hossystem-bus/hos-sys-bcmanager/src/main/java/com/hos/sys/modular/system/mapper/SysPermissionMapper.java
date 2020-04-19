@@ -2,11 +2,11 @@ package com.hos.sys.modular.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hos.sys.modular.system.entity.SysPermission;
+import com.hos.sys.modular.system.model.TreeModel;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import javax.swing.tree.TreeModel;
 import java.util.List;
 
 /**
