@@ -5,8 +5,8 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.PutObjectResult;
+import com.hos.base.util.oConvertUtils;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
-import org.jeecg.common.util.oConvertUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

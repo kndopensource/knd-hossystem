@@ -1,6 +1,8 @@
 package com.hos.sys.core.constant.factory;
 
 
+import com.hos.base.dict.SystemDict;
+
 import java.util.List;
 
 /**
@@ -60,7 +62,7 @@ public interface IConstantFactory {
     /**
      * 获取菜单通过编号
      */
-    Menu getMenuByCode(String code);
+//    Menu getMenuByCode(String code);
 
     /**
      * 获取菜单名称通过编号
@@ -110,7 +112,7 @@ public interface IConstantFactory {
     /**
      * 查询字典
      */
-    List<Dict> findInDict(Long id);
+    List<SystemDict> findInDict(Long id);
 
     /**
      * 获取被缓存的对象(用户删除业务)

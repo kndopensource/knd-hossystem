@@ -1,7 +1,9 @@
 package com.hos.sys.core.util;
 
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.system.entity.SysPermission;
+
+
+import com.hos.base.util.oConvertUtils;
+import com.hos.sys.modular.system.entity.SysPermission;
 
 import java.util.List;
 

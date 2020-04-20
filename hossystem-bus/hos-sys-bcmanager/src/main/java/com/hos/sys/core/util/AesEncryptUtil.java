@@ -1,6 +1,7 @@
 package com.hos.sys.core.util;
 
-import org.apache.shiro.codec.Base64;
+
+import cn.hutool.core.codec.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -44,7 +45,7 @@ public class AesEncryptUtil {
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
             byte[] encrypted = cipher.doFinal(plaintext);
 
-            return Base64.encodeToString(encrypted);
+            return Base64.encode(encrypted);// Base64.encodeToString(encrypted);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,12 @@
 package com.hos.base.system.util;
 
 
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.common.base.Joiner;
 import com.hos.base.consts.DataBaseConstant;
 import com.hos.base.system.vo.LoginUser;
@@ -77,13 +83,13 @@ public class JwtUtil {
 	 *
 	 * @param request
 	 * @return
-	 * @throws JeecgBootException
+	 * @throws ServiceException
 	 */
-	public static String getUserNameByToken(HttpServletRequest request) throws JeecgBootException {
+	public static String getUserNameByToken(HttpServletRequest request) throws ServiceException {
 		String accessToken = request.getHeader("X-Access-Token");
 		String username = getUsername(accessToken);
 		if (oConvertUtils.isEmpty(username)) {
-			throw new JeecgBootException("未获取到用户");
+			throw new ServiceException(408,"未获取到用户");
 		}
 		return username;
 	}
@@ -127,7 +133,9 @@ public class JwtUtil {
 		//#{sys_user_code}%
 
 		// 获取登录用户信息
-		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+//		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+		LoginUser sysUser = new LoginUser();
 
 		String moshi = "";
 		if(key.indexOf("}")!=-1){

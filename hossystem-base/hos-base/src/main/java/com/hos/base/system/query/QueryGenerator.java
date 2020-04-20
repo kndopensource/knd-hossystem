@@ -1,8 +1,21 @@
 package com.hos.base.system.query;
 
-import com.alibaba.fastjson.JSON;
-import com.atomikos.beans.PropertyUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.stylefeng.roses.core.util.SpringContextHolder;
+import java.beans.PropertyDescriptor;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.hos.base.consts.CommonConstant;
 import com.hos.base.consts.DataBaseConstant;
 import com.hos.base.system.api.ISysBaseAPI;
@@ -11,19 +24,13 @@ import com.hos.base.system.util.JwtUtil;
 import com.hos.base.system.vo.SysPermissionDataRuleModel;
 import com.hos.base.util.SqlInjectionUtil;
 import com.hos.base.util.oConvertUtils;
-import lombok.extern.slf4j.Slf4j;
-
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.NumberUtils;
 
-import java.beans.PropertyDescriptor;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URLDecoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class QueryGenerator {
@@ -79,95 +86,95 @@ public class QueryGenerator {
 	 * <br>正确示例:QueryWrapper<JeecgDemo> queryWrapper = new QueryWrapper<JeecgDemo>();
 	 * <br>3.也可以不使用这个方法直接调用 {@link #initQueryWrapper}直接获取实例
 	 */
-	public static void installMplus(QueryWrapper<?> queryWrapper, Object searchObj, Map<String, String[]> parameterMap) {
-		
+	public static void installMplus(QueryWrapper<?> queryWrapper,Object searchObj,Map<String, String[]> parameterMap) {
+
 		/*
 		 * 注意:权限查询由前端配置数据规则 当一个人有多个所属部门时候 可以在规则配置包含条件 orgCode 包含 #{sys_org_code}
-		但是不支持在自定义SQL中写orgCode in #{sys_org_code} 
+		但是不支持在自定义SQL中写orgCode in #{sys_org_code}
 		当一个人只有一个部门 就直接配置等于条件: orgCode 等于 #{sys_org_code} 或者配置自定义SQL: orgCode = '#{sys_org_code}'
 		*/
-		
+
 		//区间条件组装 模糊查询 高级查询组装 简单排序 权限查询
-		PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(searchObj);
-		Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
-		
-		//权限规则自定义SQL表达式
-		for (String c : ruleMap.keySet()) {
-			if(oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)){
-				queryWrapper.and(i ->i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
-			}
-		}
-		
-		String name, type;
-		for (int i = 0; i < origDescriptors.length; i++) {
-			//aliasName = origDescriptors[i].getName();  mybatis  不存在实体属性 不用处理别名的情况
-			name = origDescriptors[i].getName();
-			type = origDescriptors[i].getPropertyType().toString();
-			try {
-				if (judgedIsUselessField(name)|| !PropertyUtils.isReadable(searchObj, name)) {
-					continue;
-				}
-				
-				//数据权限查询
-				if(ruleMap.containsKey(name)) {
-					addRuleToQueryWrapper(ruleMap.get(name), name, origDescriptors[i].getPropertyType(), queryWrapper);
-				}
-				
-				// 添加 判断是否有区间值
-				String endValue = null,beginValue = null;
-				if (parameterMap != null && parameterMap.containsKey(name + BEGIN)) {
-					beginValue = parameterMap.get(name + BEGIN)[0].trim();
-					addQueryByRule(queryWrapper, name, type, beginValue, QueryRuleEnum.GE);
-					
-				}
-				if (parameterMap != null && parameterMap.containsKey(name + END)) {
-					endValue = parameterMap.get(name + END)[0].trim();
-					addQueryByRule(queryWrapper, name, type, endValue, QueryRuleEnum.LE);
-				}
-				
-				//判断单值  参数带不同标识字符串 走不同的查询
-				//TODO 这种前后带逗号的支持分割后模糊查询需要否 使多选字段的查询生效
-				Object value = PropertyUtils.getSimpleProperty(searchObj, name);
-				if (null != value && value.toString().startsWith(COMMA) && value.toString().endsWith(COMMA)) {
-					String multiLikeval = value.toString().replace(",,", COMMA);
-					String[] vals = multiLikeval.substring(1, multiLikeval.length()).split(COMMA);
-					final String field = oConvertUtils.camelToUnderline(name);
-					if(vals.length>1) {
-						queryWrapper.and(j -> {
-							j = j.like(field,vals[0]);
-							for (int k=1;k<vals.length;k++) {
-								j = j.or().like(field,vals[k]);
-							}
-							return j;
-						});
-					}else {
-						queryWrapper.and(j -> j.like(field,vals[0]));
-					}
-				}else {
-					//根据参数值带什么关键字符串判断走什么类型的查询
-					QueryRuleEnum rule = convert2Rule(value);
-					value = replaceValue(rule,value);
-					// add -begin 添加判断为字符串时设为全模糊查询
-					//if( (rule==null || QueryRuleEnum.EQ.equals(rule)) && "class java.lang.String".equals(type)) {
-						// 可以设置左右模糊或全模糊，因人而异
-						//rule = QueryRuleEnum.LIKE;
-					//}
-					// add -end 添加判断为字符串时设为全模糊查询
-					addEasyQuery(queryWrapper, name, rule, value);
-				}
-				
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			}
-		}
-		// 排序逻辑 处理 
-		doMultiFieldsOrder(queryWrapper, parameterMap);
-				
-		//高级查询
-		doSuperQuery(queryWrapper, parameterMap);
-		
+//		PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(searchObj);
+//		Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
+//
+//		//权限规则自定义SQL表达式
+//		for (String c : ruleMap.keySet()) {
+//			if(oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)){
+//				queryWrapper.and(i ->i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
+//			}
+//		}
+//
+//		String name, type;
+//		for (int i = 0; i < origDescriptors.length; i++) {
+//			//aliasName = origDescriptors[i].getName();  mybatis  不存在实体属性 不用处理别名的情况
+//			name = origDescriptors[i].getName();
+//			type = origDescriptors[i].getPropertyType().toString();
+//			try {
+//				if (judgedIsUselessField(name)|| !PropertyUtils.isReadable(searchObj, name)) {
+//					continue;
+//				}
+//
+//				//数据权限查询
+//				if(ruleMap.containsKey(name)) {
+//					addRuleToQueryWrapper(ruleMap.get(name), name, origDescriptors[i].getPropertyType(), queryWrapper);
+//				}
+//
+//				// 添加 判断是否有区间值
+//				String endValue = null,beginValue = null;
+//				if (parameterMap != null && parameterMap.containsKey(name + BEGIN)) {
+//					beginValue = parameterMap.get(name + BEGIN)[0].trim();
+//					addQueryByRule(queryWrapper, name, type, beginValue, QueryRuleEnum.GE);
+//
+//				}
+//				if (parameterMap != null && parameterMap.containsKey(name + END)) {
+//					endValue = parameterMap.get(name + END)[0].trim();
+//					addQueryByRule(queryWrapper, name, type, endValue, QueryRuleEnum.LE);
+//				}
+//
+//				//判断单值  参数带不同标识字符串 走不同的查询
+//				//TODO 这种前后带逗号的支持分割后模糊查询需要否 使多选字段的查询生效
+//				Object value = PropertyUtils.getSimpleProperty(searchObj, name);
+//				if (null != value && value.toString().startsWith(COMMA) && value.toString().endsWith(COMMA)) {
+//					String multiLikeval = value.toString().replace(",,", COMMA);
+//					String[] vals = multiLikeval.substring(1, multiLikeval.length()).split(COMMA);
+//					final String field = oConvertUtils.camelToUnderline(name);
+//					if(vals.length>1) {
+//						queryWrapper.and(j -> {
+//							j = j.like(field,vals[0]);
+//							for (int k=1;k<vals.length;k++) {
+//								j = j.or().like(field,vals[k]);
+//							}
+//							return j;
+//						});
+//					}else {
+//						queryWrapper.and(j -> j.like(field,vals[0]));
+//					}
+//				}else {
+//					//根据参数值带什么关键字符串判断走什么类型的查询
+//					QueryRuleEnum rule = convert2Rule(value);
+//					value = replaceValue(rule,value);
+//					// add -begin 添加判断为字符串时设为全模糊查询
+//					//if( (rule==null || QueryRuleEnum.EQ.equals(rule)) && "class java.lang.String".equals(type)) {
+//					// 可以设置左右模糊或全模糊，因人而异
+//					//rule = QueryRuleEnum.LIKE;
+//					//}
+//					// add -end 添加判断为字符串时设为全模糊查询
+//					addEasyQuery(queryWrapper, name, rule, value);
+//				}
+//
+//			} catch (Exception e) {
+//				log.error(e.getMessage(), e);
+//			}
+//		}
+//		// 排序逻辑 处理
+//		doMultiFieldsOrder(queryWrapper, parameterMap);
+//
+//		//高级查询
+//		doSuperQuery(queryWrapper, parameterMap);
+
 	}
-	
+
 	//多字段排序 TODO 需要修改前端
 	public static void doMultiFieldsOrder(QueryWrapper<?> queryWrapper, Map<String, String[]> parameterMap) {
 		String column=null,order=null;
@@ -651,8 +658,6 @@ public class QueryGenerator {
 	
 	/**
 	 *   根据权限相关配置生成相关的SQL 语句
-	 * @param searchObj
-	 * @param parameterMap
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -694,8 +699,6 @@ public class QueryGenerator {
 	
 	/**
 	  * 根据权限相关配置 组装mp需要的权限
-	 * @param searchObj
-	 * @param parameterMap
 	 * @return
 	 */
 	public static void installAuthMplus(QueryWrapper<?> queryWrapper, Class<?> clazz) {
@@ -730,7 +733,8 @@ public class QueryGenerator {
 			return DB_TYPE;
 		}
 		try {
-			ISysBaseAPI sysBaseAPI = ApplicationContextUtil.getContext().getBean(ISysBaseAPI.class);
+//			ISysBaseAPI sysBaseAPI = ApplicationContextUtil.getContext().getBean(ISysBaseAPI.class);
+			ISysBaseAPI sysBaseAPI = SpringContextHolder.getBean(ISysBaseAPI.class);
 			DB_TYPE = sysBaseAPI.getDatabaseType();
 			return DB_TYPE;
 		} catch (Exception e) {

@@ -1,11 +1,11 @@
 package com.hos.sys.modular.system.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.hos.base.system.base.entity.JeecgEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.system.base.entity.JeecgEntity;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
  * @Description: 消息模板
@@ -17,7 +17,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_sms_template")
-public class SysMessageTemplate extends JeecgEntity{
+public class SysMessageTemplate extends JeecgEntity {
 	/**模板CODE*/
 	@Excel(name = "模板CODE", width = 15)
 	private String templateCode;

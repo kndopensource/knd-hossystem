@@ -35,7 +35,10 @@
         <aliyun-oss.version>3.4.2</aliyun-oss.version>
         <autoconfigure.version>2.2.5.RELEASE</autoconfigure.version>
         <lombok.version>1.18.10</lombok.version>
-        <commons.version>2.6</commons.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons.version>3.10</commons.version>
+        <commons-beanutils>1.9.4</commons-beanutils>
+        <minio.version>4.0.0</minio.version>
     </properties>
     <modules>
         <!--系统基础模块-->
@@ -190,12 +193,17 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
                 <version>${commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons.version}</version>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils}</version>
             </dependency>
             <!--阿里云OSS存储SDK依赖-->
             <dependency>
@@ -203,7 +211,12 @@
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun-oss.version}</version>
             </dependency>
-
+            <!--文件上传${minio.version}-->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
             <!-- Swagger API文档 -->
             <dependency>
                 <groupId>io.springfox</groupId>

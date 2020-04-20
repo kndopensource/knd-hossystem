@@ -109,8 +109,9 @@
                 <artifactId>commons-io</artifactId>
             </dependency>
             <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
             </dependency>
             <dependency>
                 <groupId>com.auth0</groupId>

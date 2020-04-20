@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hos.sys.modular.system.entity.SysCheckRule;
 import com.hos.sys.modular.system.mapper.SysCheckRuleMapper;
 import com.hos.sys.modular.system.service.ISysCheckRuleService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
