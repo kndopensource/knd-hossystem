@@ -25,15 +25,15 @@
             <artifactId>hos-sys-bcmanager</artifactId>
         </dependency>
         <!-- 数据源容器配置业务模块 -->
-        <dependency>
-            <groupId>com.knd</groupId>
-            <artifactId>hos-dyconfig-db</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.knd</groupId>-->
+            <!--<artifactId>hos-dyconfig-db</artifactId>-->
+        <!--</dependency>-->
         <!-- 数据采集上传业务模块 -->
-        <dependency>
-            <groupId>com.knd</groupId>
-            <artifactId>hos-data-coltransfer</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.knd</groupId>-->
+            <!--<artifactId>hos-data-coltransfer</artifactId>-->
+        <!--</dependency>-->
         <!--业务扩展模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
